@@ -1,131 +1,152 @@
-""
-Background Context
-Write a simple UNIX command interpreter.
+ simple_shell
+Alx SchoolA simple UNIX command interpreter that provides a user interface to access and give orders to the operating system.
 
-
-
-^ “The Gates of Shell”, by Spencer Cheng, featuring Julien Barbier
-
-Unix shell
-Thompson shell
-Ken Thompson
-Everything you need to know to start coding your own shell concept page
-man or help:
-
-sh (Run sh as well)
-Learning Objectives
-At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
-
-General
-Who designed and implemented the original Unix operating system
-Who wrote the first version of the UNIX shell
-Who invented the B programming language (the direct predecessor to the C programming language)
-Who is Ken Thompson
-How does a shell work
-hat is a pid and a ppid
-How to manipulate the environment of the current process
-What is the difference between a function and a system call
-How to create processes
-What are the three prototypes of main
-How does the shell use the PATH to find the programs
-How to execute another program with the execve system call
-How to suspend the execution of a process until one of its children terminates
-What is EOF / “end-of-file”?
-Copyright - Plagiarism
-You are tasked to come up with solutions for the tasks below yourself to meet with the above learning objectives.
-You will not be able to meet the objectives of this or any following project by copying and pasting someone else’s work.
-You are not allowed to publish any content of this project.
-Any form of plagiarism is strictly forbidden and will result in removal from the program.
+Table of Contents
+Description
+File Structure
 Requirements
-General
-Allowed editors: vi, vim, emacs
-All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
-All your files should end with a new line
-A README.md file, at the root of the folder of the project is mandatory
-Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
-Your shell should not have any memory leaks
-No more than 5 functions per file
-All your header files should be include guarded
-Use system calls only when you need to (why?)
-Write a README with the description of your project
-You should have an AUTHORS file at the root of your repository, listing all individuals having contributed content to the repository. Format, see Docker
-GitHub
-*There should be one project repository per group. If you and your partner have a repository with the same name in both your accounts, you risk a 0% score. Add your partner as a collaborator. *
+Installation
+Usage
+Example of Use
+Bugs
+Authors
+Description
+This is a command line interpreter, or shell, in the tradition of the first Unix shell written by Ken Thompson in 1971. This was made as a project for Holberton School. In this project we apply the knowledge that we have learned in C programming language. Standard functions and system calls employed in simple_shell include:
 
-More Info
-Output
-Unless specified otherwise, your program must have the exact same output as sh (/bin/sh) as well as the exact same error output.
-The only difference is when you print an error, the name of the program must be equivalent to your argv[0] (See below)
-Example of error with sh:
+access, execve, exit, fork, free, malloc, read, signal, wait, write.
+File Structure
+AUTHORS - List of contributors to this repository
+man_1_simple_shell - Manual page for the simple_shell
+shell.h - program header file
+shell.c - main function of the shell
+main - the main function of the program
+ret - return function
+extstatus - return status
+writeexe - writes to standar error
+writes0 - writes to standar error
+Requirements
+simple_shell is designed to run in the Ubuntu 20.04 LTS linux environment and to be compiled using the GNU compiler collection v. gcc 4.8.4 with flags-Wall, -Werror, -Wextra, and -pedantic.
 
-$ echo "qwerty" | /bin/sh
-/bin/sh: 1: qwerty: not found
-$ echo "qwerty" | /bin/../bin/sh
-/bin/../bin/sh: 1: qwerty: not found
+Installation
+Clone this repository: git clone "https://github.com/Timex19/simple_shell.git"
+Change directories into the repository: cd simple_shell
+Compile: gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+Run the shell in interactive mode: ./hsh
+Or run the shell in non-interactive mode: example echo "pwd" | ./hsh
+Usage
+The simple_shell is designed to execute commands in a similar manner to sh, however with more limited functionality. The development of this shell is ongoing. The below features will be checked as they become available (see man page for complete information on usage):
+
+Features
+ uses the PATH
+ implements builtins
+ handles command line arguments
+ custom strtok function
+ uses exit status
+ shell continues upon Crtl+C (^C)
+ handles comments (#)
+ handles ;
+ custom getline type function
+ handles && and ||
+ aliases
+ variable replacement
+Built-ins
+ exit
+ env
+ setenv
+ unsetenv
+ cd
+ help
+ history
+Examples
+Absolute path commands
+non interactive
+$ echo "/bin/pwd" | ./hsh
+$ /home/timex/simple_shell
+interactive mode
+$ ./hsh
+./hsh$ /bin/echo hello world
+helo world
+./hsh$ exit
 $
-Same error with your program hsh:
-
-$ echo "qwerty" | ./hsh
-./hsh: 1: qwerty: not found
-$ echo "qwerty" | ./././hsh
-./././hsh: 1: qwerty: not found
+short command
+non interactive
+$ echo "pwd" | ./hsh
+$ /home/timex/simple_shell
+interactive mode
+$ ./hsh
+./hsh$ echo hello world
+helo world
+./hsh$ exit
 $
-
-List of allowed functions and system calls
-access (man 2 access)
-chdir (man 2 chdir)
-close (man 2 close)
-closedir (man 3 closedir)
-execve (man 2 execve)
-exit (man 3 exit)
-_exit (man 2 _exit)
-fflush (man 3 fflush)
-fork (man 2 fork)
-free (man 3 free)
-getcwd (man 3 getcwd)
-getline (man 3 getline)
-getpid (man 2 getpid)
-isatty (man 3 isatty)
-kill (man 2 kill)
-malloc (man 3 malloc)
-open (man 2 open)
-opendir (man 3 opendir)
-perror (man 3 perror)
-read (man 2 read)
-readdir (man 3 readdir)
-signal (man 2 signal)
-stat (__xstat) (man 2 stat)
-lstat (__lxstat) (man 2 lstat)
-fstat (__fxstat) (man 2 fstat)
-strtok (man 3 strtok)
-wait (man 2 wait)
-waitpid (man 2 waitpid)
-wait3 (man 2 wait3)
-wait4 (man 2 wait4)
-write (man 2 write)
-Compilation
-Your shell will be compiled this way:
-
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-Testing
-Your shell should work like this in interactive mode:
+built-ins
+non interactive
+$ echo "exit" | ./hsh
+$ echo $?
+0
+interactive mode
+$ ./hsh
+./hsh$ exit 98
+$ echo $?
+98
+Some error output
 
 $ ./hsh
-($) /bin/ls
-hsh main.c shell.c
-($)
-($) exit
-$
-But also in non-interactive mode:
+./hsh$ ls /non_existing_folder
+ls: cannot access '/non_existing_folder': No such file or directory
+./hsh$ exit
+$ echo $?
+2
+$ echo "non_valid_command" | ./hsh
+./hsh: 1: non_valid_command: not found
+$ echo $?
+127
+Project files
+File	Description
+AUTHORS	File with names of the owners and authors of this project
+README.md	Nutshell description of simple_shell project
+chain.c	Auxiliar functions
+signal_exit: handler for SIGINT signals
+_calloc: allocate memory and fills it with zeros
+built-ins.c	Built-ins functions:
+check_word: evalute alpha chars in string
+exit_built_in: stop execution of shell
+env_built_in: prints environment variables
+core_funs.c	Heart of simple_shell
+check_builtin: check if first argument is a built-int
+not_found_error: handler for print error when command is not found
+simple_exec: decision flow for command execution
+path_funs.c	Function to check command in path
+_getenv: search variable in environment vars
+cmd_path: concat first argument with PATH dirs
+shell.h	Header file
+All includes
+All prototypes
+Definition of struct params
+simple_shell.c	Initialize the simple_shell execution:
+test:
+Remove \n last char readed with getline
+Tokenize and save in argv all arguments readed
+Calls simple_exec
+main:
+Initialize params struct vars
+Set signal listenes
+Print prompt (interactive mode)
+Read arguments with getline
+Handle CTRL + D to stop execution
+string_function.c	First string functions file
+_strcat: concat string (no malloc)
+_strlen: get length of string
+rev_string: reverse a string
+_itoa: convert int to string
+_strcmp: compare two strings
+string_function2.c	Second string functions file
+_strchr: search char in string
+string_function3: copy string in other one
+str_concat: concat string (malloc)
+_atoi: convert string num, to int
 
-$ echo "/bin/ls" | ./hsh
-hsh main.c shell.c test_ls_2
-$
-$ cat test_ls_2
-/bin/ls
-/bin/ls
-$
-$ cat test_ls_2 | ./hsh
-hsh main.c shell.c test_ls_2
-hsh main.c shell.c test_ls_2
-$
+others: The description and purpose of other functions which are not listed under project files, but exists under the repository can be found in in the commit messages of the concerned files/functions.	
+Full documentation
+For more info about this project you can run the man page:
+
+$ ./man_1_simple_shell
